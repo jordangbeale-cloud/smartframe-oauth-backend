@@ -1,4 +1,5 @@
 const express = require('express');
+const fetch = require('node-fetch'); // Required for Render Node builds
 const app = express();
 
 // Render will set this via env var, but default to 3000 for local testing
@@ -42,13 +43,9 @@ app.get('/oauth-callback', async (req, res) => {
     if (!tokenResponse.ok) {
       return res
         .status(500)
-        .send(
-          'Token exchange failed. Check the Render logs for details.'
-        );
+        .send('Token exchange failed. Check the Render logs for details.');
     }
 
-    // At this point, your app is considered installed in that portal.
-    // For now we just show a simple success message.
     res.send(`
       <h2>SmartFrame installed successfully 🎉</h2>
       <p>You can close this window and return to HubSpot.</p>
